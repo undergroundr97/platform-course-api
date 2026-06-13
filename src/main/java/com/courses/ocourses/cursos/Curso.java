@@ -1,10 +1,13 @@
 package com.courses.ocourses.cursos;
 
+import com.courses.ocourses.categoria.Categoria;
 import com.courses.ocourses.usuario.Usuario;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +25,9 @@ public class Curso implements Serializable {
     @ManyToOne
     @JoinColumn(name = "instrutor_id")
     private Usuario instrutor;
+
+    @ManyToOne
+    private Categoria categoria;
 
 
 
