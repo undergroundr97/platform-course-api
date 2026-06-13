@@ -1,5 +1,6 @@
 package com.courses.ocourses.cursos;
 
+import com.courses.ocourses.usuario.Usuario;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -7,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_cursos")
+@Table(name = "table_cursos")
 public class Cursos implements Serializable {
 
     @Id
@@ -17,6 +18,11 @@ public class Cursos implements Serializable {
     private String descricao;
     private BigDecimal preco;
     private Integer cargaHoraria;
+
+    @ManyToOne
+    @JoinColumn(name = "instrutor_id")
+    private Usuario instrutor;
+
 
 
     public Cursos() {
