@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "table_cursos")
-public class Cursos implements Serializable {
+public class Curso implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +25,16 @@ public class Cursos implements Serializable {
 
 
 
-    public Cursos() {
+    public Curso() {
     }
 
-    public Cursos(Long id, String titulo, String descricao, BigDecimal preco, Integer cargaHoraria) {
+    public Curso(Long id, String titulo, String descricao, BigDecimal preco, Integer cargaHoraria, Usuario instrutor) {
         Id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.preco = preco;
         this.cargaHoraria = cargaHoraria;
+        this.instrutor = instrutor;
     }
 
     public Long getId() {
@@ -79,7 +80,7 @@ public class Cursos implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Cursos cursos = (Cursos) o;
+        Curso cursos = (Curso) o;
         return Objects.equals(Id, cursos.Id) && Objects.equals(titulo, cursos.titulo) && Objects.equals(descricao, cursos.descricao) && Objects.equals(preco, cursos.preco) && Objects.equals(cargaHoraria, cursos.cargaHoraria);
     }
 
