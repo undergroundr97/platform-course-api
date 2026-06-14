@@ -1,5 +1,6 @@
 package com.courses.ocourses.cursos;
 
+import com.courses.ocourses.aula.Aula;
 import com.courses.ocourses.categoria.Categoria;
 import com.courses.ocourses.usuario.Usuario;
 import jakarta.persistence.*;
@@ -26,9 +27,12 @@ public class Curso implements Serializable {
     @JoinColumn(name = "instrutor_id")
     private Usuario instrutor;
 
+
     @ManyToOne
     private Categoria categoria;
 
+    @OneToMany
+    private List<Aula> aulas = new ArrayList<>();
 
 
     public Curso() {
@@ -81,6 +85,22 @@ public class Curso implements Serializable {
 
     public void setCargaHoraria(Integer cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
+    }
+
+    public Usuario getInstrutor() {
+        return instrutor;
+    }
+
+    public void setInstrutor(Usuario instrutor) {
+        this.instrutor = instrutor;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @Override

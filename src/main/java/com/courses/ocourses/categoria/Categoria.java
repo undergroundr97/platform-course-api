@@ -54,6 +54,10 @@ public class Categoria implements Serializable {
         this.descricao = descricao;
     }
 
+    public List<Curso> getListaCursosComCategoria() {
+        return listaCursosComCategoria;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
