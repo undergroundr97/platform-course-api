@@ -5,11 +5,12 @@ import com.courses.ocourses.usuario.Usuario;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 //@Entity
 @Embeddable
-public class MatriculaPK{
+public class MatriculaPK implements Serializable {
 
     private Long cursoId;
     private Long usuarioId;

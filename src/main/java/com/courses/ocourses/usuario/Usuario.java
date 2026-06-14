@@ -1,5 +1,6 @@
 package com.courses.ocourses.usuario;
 
+import com.courses.ocourses.cursos.Curso;
 import com.courses.ocourses.matricula.Matricula;
 import jakarta.persistence.*;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "table_usuarios")
 public class Usuario implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -18,8 +20,12 @@ public class Usuario implements Serializable {
     private String email;
     private String password;
 
-    @OneToMany
+    @OneToMany(mappedBy = "usuarioMatriculado")
     private List<Matricula> matriculas = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "usuarioMatriculado")
+    private List<Matricula> cursosMatriculados;
 
     public Usuario() {
     }

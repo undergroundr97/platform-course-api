@@ -1,9 +1,9 @@
 package com.courses.ocourses.matricula;
 
+import com.courses.ocourses.cursos.Curso;
 import com.courses.ocourses.matricula.matriculaPK.MatriculaPK;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.courses.ocourses.usuario.Usuario;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Matricula implements Serializable {
 
     @EmbeddedId
-    private MatriculaPK id = new MatriculaPK();
+    private MatriculaPK id;
 
     private LocalDateTime dataMatricula;
     private StatusMatricula status;
@@ -22,20 +22,35 @@ public class Matricula implements Serializable {
     private Double notaFinal;
     private LocalDateTime dataConclusao;
 
-    public Matricula(MatriculaPK id, LocalDateTime dataMatricula, StatusMatricula status, Integer progresso) {
-        this.id = id;
+    @ManyToOne
+    @MapsId("usuarioId")
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuarioMatriculado;
+
+    @ManyToOne
+    @MapsId("cursoId")
+    @JoinColumn(name = "curso_id")
+    private Curso cursoMatriculado;
+
+
+    public Matricula() {
+    }
+
+    public Matricula(Usuario usuarioMatriculado, Curso cursoMatriculado){
+        this.cursoMatriculado = cursoMatriculado;
+        this.usuarioMatriculado = usuarioMatriculado;
+    }
+
+    public Matricula(LocalDateTime dataMatricula, StatusMatricula status, Usuario usuarioMatriculado, Curso cursoMatriculado) {
         this.dataMatricula = dataMatricula;
         this.status = status;
-        this.progresso = progresso;
+        this.usuarioMatriculado = usuarioMatriculado;
+        this.cursoMatriculado = cursoMatriculado;
+        this.id.setCursoId(cursoMatriculado.getId());
+        this.id.setUsuarioId(usuarioMatriculado.getId());
     }
 
-    public MatriculaPK getId() {
-        return id;
-    }
 
-    public void setId(MatriculaPK id) {
-        this.id = id;
-    }
 
     public LocalDateTime getDataMatricula() {
         return dataMatricula;

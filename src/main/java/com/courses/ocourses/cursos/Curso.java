@@ -2,11 +2,13 @@ package com.courses.ocourses.cursos;
 
 import com.courses.ocourses.aula.Aula;
 import com.courses.ocourses.categoria.Categoria;
+import com.courses.ocourses.matricula.Matricula;
 import com.courses.ocourses.usuario.Usuario;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.nio.MappedByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,12 +29,16 @@ public class Curso implements Serializable {
     @JoinColumn(name = "instrutor_id")
     private Usuario instrutor;
 
-
     @ManyToOne
     private Categoria categoria;
 
     @OneToMany(mappedBy = "curso")
     private List<Aula> aulas = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "cursoMatriculado")
+    private List<Matricula> matriculasAtivas;
+
 
 
     public Curso() {

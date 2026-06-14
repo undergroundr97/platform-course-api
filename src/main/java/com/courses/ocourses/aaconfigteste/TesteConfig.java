@@ -1,4 +1,4 @@
-package com.courses.ocourses.configteste;
+package com.courses.ocourses.aaconfigteste;
 
 import com.courses.ocourses.aula.Aula;
 import com.courses.ocourses.aula.AulaService;
@@ -6,6 +6,8 @@ import com.courses.ocourses.categoria.Categoria;
 import com.courses.ocourses.categoria.CategoriaService;
 import com.courses.ocourses.cursos.Curso;
 import com.courses.ocourses.cursos.CursoService;
+import com.courses.ocourses.matricula.Matricula;
+import com.courses.ocourses.matricula.MatriculaService;
 import com.courses.ocourses.usuario.Usuario;
 import com.courses.ocourses.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class TesteConfig implements CommandLineRunner {
     @Autowired
     AulaService aulaService;
 
+    @Autowired
+    MatriculaService matriculaService;
+
     @Override
     public void run(String... args) throws Exception {
 
@@ -50,6 +55,9 @@ public class TesteConfig implements CommandLineRunner {
     c1.getAulas().add(a1);
     aulaService.save(a1);
     cursoService.save(c1);
+
+    Matricula m1 = new Matricula(u1,c1);
+    matriculaService.save(m1);
 
     }
 }
