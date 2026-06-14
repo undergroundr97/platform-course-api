@@ -31,7 +31,7 @@ public class Curso implements Serializable {
     @ManyToOne
     private Categoria categoria;
 
-    @OneToMany
+    @OneToMany(mappedBy = "curso")
     private List<Aula> aulas = new ArrayList<>();
 
 
@@ -101,6 +101,10 @@ public class Curso implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public List<Aula> getAulas() {
+        return aulas;
     }
 
     @Override
