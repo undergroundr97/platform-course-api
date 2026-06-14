@@ -46,11 +46,32 @@ public class Matricula implements Serializable {
         this.status = status;
         this.usuarioMatriculado = usuarioMatriculado;
         this.cursoMatriculado = cursoMatriculado;
-        this.id.setCursoId(cursoMatriculado.getId());
-        this.id.setUsuarioId(usuarioMatriculado.getId());
     }
 
 
+    public MatriculaPK getId() {
+        return id;
+    }
+
+    public void setId(MatriculaPK id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuarioMatriculado() {
+        return usuarioMatriculado;
+    }
+
+    public void setUsuarioMatriculado(Usuario usuarioMatriculado) {
+        this.usuarioMatriculado = usuarioMatriculado;
+    }
+
+    public Curso getCursoMatriculado() {
+        return cursoMatriculado;
+    }
+
+    public void setCursoMatriculado(Curso cursoMatriculado) {
+        this.cursoMatriculado = cursoMatriculado;
+    }
 
     public LocalDateTime getDataMatricula() {
         return dataMatricula;
