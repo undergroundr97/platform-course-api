@@ -1,6 +1,7 @@
 package com.courses.ocourses.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,9 @@ public class UsuarioService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public Usuario findById(Long id){
         return usuarioRepository.findById(id).get();
     }
@@ -19,8 +23,9 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public void save(Usuario obj){
-        usuarioRepository.save(obj);
+    public void save(Usuario usuario){
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuarioRepository.save(usuario);
     }
 
 
