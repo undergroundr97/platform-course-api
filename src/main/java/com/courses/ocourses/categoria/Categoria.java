@@ -14,7 +14,7 @@ public class Categoria implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String nome;
     private String descricao;
 
@@ -25,17 +25,17 @@ public class Categoria implements Serializable {
     }
 
     public Categoria(Long id, String nome, String descricao) {
-        Id = id;
+        this.id = id;
         this.nome = nome;
         this.descricao = descricao;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getNome() {
@@ -62,12 +62,12 @@ public class Categoria implements Serializable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Categoria categoria = (Categoria) o;
-        return Objects.equals(Id, categoria.Id) && Objects.equals(nome, categoria.nome) && Objects.equals(descricao, categoria.descricao);
+        return Objects.equals(id, categoria.id) && Objects.equals(nome, categoria.nome) && Objects.equals(descricao, categoria.descricao);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, nome, descricao);
+        return Objects.hash(id, nome, descricao);
     }
 
 

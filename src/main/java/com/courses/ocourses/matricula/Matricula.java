@@ -2,11 +2,13 @@ package com.courses.ocourses.matricula;
 
 import com.courses.ocourses.cursos.Curso;
 import com.courses.ocourses.matricula.matriculaPK.MatriculaPK;
+import com.courses.ocourses.pagamento.Pagamento;
 import com.courses.ocourses.usuario.Usuario;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -32,6 +34,8 @@ public class Matricula implements Serializable {
     @JoinColumn(name = "curso_id")
     private Curso cursoMatriculado;
 
+    @OneToMany(mappedBy = "matricula")
+    private List<Pagamento> listaPagamentos;
 
     public Matricula() {
     }

@@ -13,10 +13,13 @@ public class Pagamento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private LocalDateTime dataPagamento;
     private Double valor;
     private MetodoPagamento metodoPagamento;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status_pagamento")
     private StatusPagamento status;
 
     @ManyToOne
@@ -26,7 +29,7 @@ public class Pagamento implements Serializable {
     }
 
     public Pagamento(Long id, LocalDateTime dataPagamento, Double valor, MetodoPagamento metodoPagamento, Matricula matricula) {
-        Id = id;
+        this.id = id;
         this.dataPagamento = dataPagamento;
         this.valor = valor;
         this.metodoPagamento = metodoPagamento;
@@ -35,11 +38,11 @@ public class Pagamento implements Serializable {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public LocalDateTime getDataPagamento() {
@@ -86,11 +89,11 @@ public class Pagamento implements Serializable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Pagamento pagamento = (Pagamento) o;
-        return Objects.equals(Id, pagamento.Id) && Objects.equals(dataPagamento, pagamento.dataPagamento) && Objects.equals(valor, pagamento.valor) && metodoPagamento == pagamento.metodoPagamento && Objects.equals(matricula, pagamento.matricula);
+        return Objects.equals(id, pagamento.id) && Objects.equals(dataPagamento, pagamento.dataPagamento) && Objects.equals(valor, pagamento.valor) && metodoPagamento == pagamento.metodoPagamento && Objects.equals(matricula, pagamento.matricula);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, dataPagamento, valor, metodoPagamento, matricula);
+        return Objects.hash(id, dataPagamento, valor, metodoPagamento, matricula);
     }
 }

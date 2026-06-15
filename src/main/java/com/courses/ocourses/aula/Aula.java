@@ -12,7 +12,7 @@ public class Aula implements Serializable {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String titulo;
     private Integer ordem;
     private String videoUrl;
@@ -26,7 +26,7 @@ public class Aula implements Serializable {
     }
 
     public Aula(Long id, String titulo, Integer ordem, String videoUrl, Integer duracao, Curso curso) {
-        Id = id;
+        this.id = id;
         this.titulo = titulo;
         this.ordem = ordem;
         this.videoUrl = videoUrl;
@@ -35,11 +35,11 @@ public class Aula implements Serializable {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -82,17 +82,16 @@ public class Aula implements Serializable {
         this.curso = curso;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Aula aula = (Aula) o;
-        return Objects.equals(Id, aula.Id) && Objects.equals(titulo, aula.titulo) && Objects.equals(ordem, aula.ordem) && Objects.equals(videoUrl, aula.videoUrl) && Objects.equals(duracao, aula.duracao) && Objects.equals(curso, aula.curso);
+        return Objects.equals(id, aula.id) && Objects.equals(titulo, aula.titulo) && Objects.equals(ordem, aula.ordem) && Objects.equals(videoUrl, aula.videoUrl) && Objects.equals(duracao, aula.duracao) && Objects.equals(curso, aula.curso);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, titulo, ordem, videoUrl, duracao, curso);
+        return Objects.hash(id, titulo, ordem, videoUrl, duracao, curso);
     }
-
-
 }

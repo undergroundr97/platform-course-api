@@ -8,10 +8,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.nio.MappedByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "table_cursos")
@@ -19,7 +16,7 @@ public class Curso implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String titulo;
     private String descricao;
     private BigDecimal preco;
@@ -39,13 +36,14 @@ public class Curso implements Serializable {
     @OneToMany(mappedBy = "cursoMatriculado")
     private List<Matricula> matriculasAtivas;
 
+    private List<Usuario> usuariosDoCurso = new ArrayList<>();
 
 
     public Curso() {
     }
 
     public Curso(Long id, String titulo, String descricao, BigDecimal preco, Integer cargaHoraria, Usuario instrutor) {
-        Id = id;
+        this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.preco = preco;
@@ -54,11 +52,11 @@ public class Curso implements Serializable {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -113,15 +111,24 @@ public class Curso implements Serializable {
         return aulas;
     }
 
+
+    public List<Matricula> getMatriculasAtivas() {
+        return matriculasAtivas;
+    }
+
+    public List<Usuario> getUsuariosDoCurso() {
+        return usuariosDoCurso;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Curso cursos = (Curso) o;
-        return Objects.equals(Id, cursos.Id) && Objects.equals(titulo, cursos.titulo) && Objects.equals(descricao, cursos.descricao) && Objects.equals(preco, cursos.preco) && Objects.equals(cargaHoraria, cursos.cargaHoraria);
+        return Objects.equals(id, cursos.id) && Objects.equals(titulo, cursos.titulo) && Objects.equals(descricao, cursos.descricao) && Objects.equals(preco, cursos.preco) && Objects.equals(cargaHoraria, cursos.cargaHoraria);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, titulo, descricao, preco, cargaHoraria);
+        return Objects.hash(id, titulo, descricao, preco, cargaHoraria);
     }
 }

@@ -1,6 +1,5 @@
 package com.courses.ocourses.usuario;
 
-import com.courses.ocourses.cursos.Curso;
 import com.courses.ocourses.matricula.Matricula;
 import jakarta.persistence.*;
 
@@ -15,7 +14,7 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
     private String nome;
     private String email;
     private String password;
@@ -31,18 +30,18 @@ public class Usuario implements Serializable {
     }
 
     public Usuario(Long id, String nome, String email, String password) {
-        Id = id;
+        this.id = id;
         this.nome = nome;
         this.email = email;
         this.password = password;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getNome() {
@@ -73,12 +72,12 @@ public class Usuario implements Serializable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(Id, usuario.Id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(password, usuario.password);
+        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(password, usuario.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, nome, email, password);
+        return Objects.hash(id, nome, email, password);
     }
 
 
