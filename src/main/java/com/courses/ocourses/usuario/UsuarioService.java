@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -26,6 +27,10 @@ public class UsuarioService {
     public void save(Usuario usuario){
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         usuarioRepository.save(usuario);
+    }
+
+    public Optional<Usuario> findByEmail(String email){
+        return usuarioRepository.findByEmail(email);
     }
 
 

@@ -52,6 +52,8 @@ public class TesteConfig implements CommandLineRunner {
         Usuario aluno1 = new Usuario(null, "pedro", "pedro@gmail.com", "123456789");
         usuarioService.save(u1);
         usuarioService.save(aluno1);
+        Usuario vitor = new Usuario(null, "vitor1", "v", "1");
+        usuarioService.save(vitor);
 
         Curso c1 = new Curso(null, "Meu primeiro curso", "este curso blablabla", BigDecimal.valueOf(49.99), 150, u1);
         Categoria cat1 = new Categoria(null, "Jogos", "Minha nova cateogira");

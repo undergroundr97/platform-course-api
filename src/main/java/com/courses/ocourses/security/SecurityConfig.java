@@ -2,6 +2,7 @@ package com.courses.ocourses.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
@@ -12,6 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -21,29 +27,48 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public UserDetailsService users(PasswordEncoder passwordEncoder){
-//        UserDetails user = User.builder()
-//                .username("vitor")
-//                .password(passwordEncoder.encode("12"))
-//                .roles("ADMIN")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
+    @Bean
+    public UserDetailsService users(PasswordEncoder passwordEncoder){
+        UserDetails user = User.builder()
+                .username("vitor")
+                .password(passwordEncoder.encode("12"))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user);
+    }
 
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http){
         http.authorizeHttpRequests(request ->
-                        request.requestMatchers("/h2-console/**").permitAll()
-                                .anyRequest().authenticated())
+                        request.requestMatchers("/h2-console").permitAll()
+                                .requestMatchers("/usuarios").permitAll()
+                                .anyRequest().permitAll())
                 .formLogin(form -> form.permitAll())
                 .logout(LogoutConfigurer::permitAll)
+                .cors(Customizer.withDefaults())
                 .csrf( csrf -> csrf.disable()
                         .headers(headers -> headers.frameOptions(frame -> frame.disable())));
         return http.build();
     }
 
+
+//    PARA HABILITAR O CORS COM SECURITY ATIVO
+    @Bean
+    CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(
+                List.of("http://localhost:4200")
+        );
+        configuration.setAllowedMethods(
+                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        );
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
 }
