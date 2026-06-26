@@ -1,11 +1,18 @@
 package com.courses.ocourses.security;
 
+import com.courses.ocourses.usuario.UsuarioDetailsService;
+import com.courses.ocourses.usuario.UsuarioRepository;
+import com.courses.ocourses.usuario.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,33 +29,45 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
+    @Autowired
+    UsuarioDetailsService usuarioDetailsService;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public UserDetailsService users(PasswordEncoder passwordEncoder){
-        UserDetails user = User.builder()
-                .username("vitor")
-                .password(passwordEncoder.encode("12"))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config ) throws Exception {
+        return config.getAuthenticationManager();
     }
+
+//    @Bean
+//    public UserDetailsService users(PasswordEncoder passwordEncoder){
+//        UserDetails user = User.builder()
+//                .username("vitor")
+//                .password(passwordEncoder.encode("12"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http){
         http.authorizeHttpRequests(request ->
-                        request.requestMatchers("/h2-console").permitAll()
-                                .requestMatchers("/usuarios").permitAll()
-                                .anyRequest().permitAll())
-                .formLogin(form -> form.permitAll())
+                        request.requestMatchers("/api/login").permitAll()
+                                .anyRequest().authenticated())
                 .logout(LogoutConfigurer::permitAll)
                 .cors(Customizer.withDefaults())
                 .csrf( csrf -> csrf.disable()
+                        .sessionManagement(session -> {
+                            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                        })
                         .headers(headers -> headers.frameOptions(frame -> frame.disable())));
         return http.build();
     }

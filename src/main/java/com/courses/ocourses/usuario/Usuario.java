@@ -2,6 +2,7 @@ package com.courses.ocourses.usuario;
 
 import com.courses.ocourses.matricula.Matricula;
 import jakarta.persistence.*;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class Usuario implements Serializable {
     private String nome;
     private String email;
     private String password;
+
 
     @OneToMany(mappedBy = "usuarioMatriculado")
     private List<Matricula> matriculas = new ArrayList<>();
