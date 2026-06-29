@@ -1,7 +1,10 @@
 package com.courses.ocourses.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,6 +40,44 @@ public class JwtService {
 
     }
 
+    public String extractUsername(String token){
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
 
+        //verifyWith > verifica a chave hash256 de secret
+        //build -> build
+        // passe o token recebido na web -> parseSignedClaim(token)
+        //getPayload  - getSubject (retorna o sub, nesse caso user.email
+    }
+
+    public Date extractExpirationDate(String token){
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getExpiration();
+    }
+
+    private boolean isTokenExpired(String token){
+        Instant datenow = Instant.now();
+        if(datenow.isAfter(extractExpirationDate(token).toInstant())){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails){
+        if(extractUsername(token).equals(userDetails.getUsername()) && !isTokenExpired(token)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

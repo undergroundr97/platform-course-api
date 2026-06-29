@@ -20,14 +20,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
+import java.util.logging.Filter;
 
 @Configuration
 public class SecurityConfig {
+
+    @Autowired
+    JwtFilter jwtFilter;
 
     @Autowired
     UsuarioDetailsService usuarioDetailsService;
@@ -44,6 +49,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config ) throws Exception {
         return config.getAuthenticationManager();
     }
+
 
 //    @Bean
 //    public UserDetailsService users(PasswordEncoder passwordEncoder){
@@ -62,13 +68,14 @@ public class SecurityConfig {
         http.authorizeHttpRequests(request ->
                         request.requestMatchers("/api/login").permitAll()
                                 .anyRequest().authenticated())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(LogoutConfigurer::permitAll)
                 .cors(Customizer.withDefaults())
-                .csrf( csrf -> csrf.disable()
+                .csrf( csrf -> csrf.disable())
                         .sessionManagement(session -> {
                             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                         })
-                        .headers(headers -> headers.frameOptions(frame -> frame.disable())));
+                        .headers(headers -> headers.frameOptions(frame -> frame.disable()));
         return http.build();
     }
 
