@@ -17,6 +17,7 @@ public class Usuario implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    private String sobrenome;
     private String email;
     private String password;
 
@@ -31,11 +32,12 @@ public class Usuario implements Serializable{
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String password) {
+    public Usuario(Long id, String nome, String sobrenome,String email, String password) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.password = password;
+        this.sobrenome = sobrenome;
     }
 
     public Long getId() {
@@ -68,6 +70,18 @@ public class Usuario implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
+    public List<Matricula> getCursosMatriculados() {
+        return cursosMatriculados;
     }
 
     @Override

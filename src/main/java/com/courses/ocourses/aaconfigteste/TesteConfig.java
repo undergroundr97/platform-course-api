@@ -47,12 +47,12 @@ public class TesteConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Usuario u1 = new Usuario(null, "vitor", "vitor@gmail.com", "123456789");
+        Usuario u1 = new Usuario(null, "vitor","emanuel" ,"vitor@gmail.com", "123456789");
 
-        Usuario aluno1 = new Usuario(null, "pedro", "pedro@gmail.com", "123456789");
+        Usuario aluno1 = new Usuario(null, "pedro", "emanuel", "pedro@gmail.com", "123456789");
         usuarioService.save(u1);
         usuarioService.save(aluno1);
-        Usuario vitor = new Usuario(null, "vitor1", "v", "1");
+        Usuario vitor = new Usuario(null, "vitor1", "emanuel", "vitor_@gmail.com", "123456789" );
         usuarioService.save(vitor);
 
         Curso c1 = new Curso(null, "Meu primeiro curso", "este curso blablabla", BigDecimal.valueOf(49.99), 150, u1);
